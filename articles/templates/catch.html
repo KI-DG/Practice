@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>Catch</h1>
+  <h2>당신의 결과는</h2>
+  <h3>{{message}}<h3>
+  <a href={% url 'throw' %}> 다시 던지러가자.</a>
+
+{% endblock content %}
+
+

@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% comment %} {% block content %}
+  <h1>Throw</h1>
+  <form action="/catch/" method="GET">
+      <label type="text" name="message">던져</label>
+      <input type="text" id="message" name="message">
+      <input type="submit">
+  </form>
+{% endblock content %}
+정적메시지 {% endcomment %}
+
+{% block content %}
+  <h1>당신의 소속과 이름을 적어주세요</h1>
+  <form action="/catch/" method="GET">
+      <label type="department" >소속</label>
+      <input type="text" id="department" name="department">
+      <br>
+      <label type="name">이름</label>
+      <input type="text" id="name" name="name">
+      <input type="submit">
+      <a href={% url 'index' %}> 홈화면으로 이동.</a>
+  </form>
+{% endblock content %}
