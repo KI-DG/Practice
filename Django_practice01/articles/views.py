@@ -1,9 +1,11 @@
 import datetime
+from email import message
+import random
 from django.shortcuts import render
 
 # Create your views here.
 def index(request):
-    return render(request, 'index.html')
+    return render(request, 'articles/index.html')
 
 def greeting(request):
     foods = ['apple', 'chicken', 'burger']
@@ -16,10 +18,10 @@ def greeting(request):
         'six_food': six_food,
         'today' : today,
     }
-    return render(request, 'greeting.html', context)
+    return render(request, 'articles/greeting.html', context)
 
 def throw(request):
-    return render(request, 'throw.html')
+    return render(request, 'articles/throw.html')
 
 def catch(request):
     # print(request)
@@ -39,12 +41,24 @@ def catch(request):
     context ={
         'message': message
     }
-    return render(request, 'catch.html', context)
+    return render(request, 'articles/catch.html', context)
+
+# def price(request):
+#     product_price = {"라면":980,"홈런볼":1500,"칙촉":2300, "식빵":1800}
+#     if product_price == '라면':
+#         message = product_price.values * 
+#     elif product_price == '홈런볼':
+#     elif
+#     context ={
+#     'product_price' : product_price    
+#     }
+#     return render(request, 'price.html', context)
 
 def lotto(request):
     name = '기룡'
-    
+    ran = random.sample(range(1,46), 6)
     context ={
-        'name': name
+        'name': name,
+        'ran' : ran,
     }
-    return render(request, 'lotto.html', context)
+    return render(request, 'articles/lotto.html', context)
