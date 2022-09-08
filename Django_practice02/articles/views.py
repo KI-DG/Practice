@@ -23,7 +23,7 @@ def create(request):
     # article.content = content
     # article.save()
     #2 사용은 이걸로 한다.
-    article = Article(title=title, content=content)
+    article = Article(title='title', content='content')
     article.save()
     #3
     # Article.objects.create(title=title, content=content)
