@@ -18,7 +18,7 @@ def create(request):
     content = request.GET.get('content')
     # DB에 저장 (3가지 방식)
     #1
-    # article = Article()
+    # article = Article()s
     # article.title = title
     # article.content = content
     # article.save()
