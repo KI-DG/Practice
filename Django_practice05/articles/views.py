@@ -1,5 +1,10 @@
 from django.shortcuts import render, redirect
-from django.views.decorators.http import require_safe, require_http_methods, require_POST
+from django.views.decorators.http import (
+    require_safe,
+    require_http_methods,
+    require_POST,
+)
+from django.contrib.auth.decorators import login_required
 from .forms import ArticleForm
 from .models import Article
 
@@ -8,10 +13,11 @@ from .models import Article
 def index(request):
     articles = Article.objects.all()
     # articles = Article.objects.order_by('-pk')
-    context ={
+    context = {
         'articles': articles,
     }
     return render(request, 'articles/index.html', context)
+
 
 # def new(request):
 #     form = ArticleForm()
@@ -20,11 +26,13 @@ def index(request):
 #     }
 #     return render(request, 'articles/new.html', context)
 
-@require_http_methods(['GET','POST'])
+
+@login_required
+@require_http_methods(['GET', 'POST'])
 # new 와 create를 합친다 method를 통해 나누어진다
 def create(request):
     if request.method == 'POST':
-        #create
+        # create
         form = ArticleForm(request.POST)
         if form.is_valid():
             article = form.save()
@@ -33,7 +41,7 @@ def create(request):
         # new
         form = ArticleForm()
     context = {
-        'form' : form,
+        'form': form,
     }
     return render(request, 'articles/create.html', context)
 
@@ -63,27 +71,30 @@ def create(request):
     # return render(request, 'articles/index.html')
     # index를 요청한게 아니라 아무것도 안뜨는것이다.
     # 주소가 변하지 않는다
-    # render는 화면만 띄우기만 하기 때문에 
+    # render는 화면만 띄우기만 하기 때문에
     # return redirect('articles:index')
-    # 위에 두가지 문제를 한번에 해결 
+    # 위에 두가지 문제를 한번에 해결
     # 요청은 제대로 들어가고 길을 다시 찾아준다.
     # return redirect('articles:detail', article.pk)
 
+
+@require_safe
 def detail(request, pk):
     article = Article.objects.get(pk=pk)
-                                # 키=인자로 들어온 값
-    context ={
+    # 키=인자로 들어온 값
+    context = {
         'article': article,
     }
     return render(request, 'articles/detail.html', context)
 
+
 @require_POST
 def delete(request, pk):
-    article = Article.objects.get(pk=pk)
-    if request.method == 'POST':
+    if request.user.is_authenticated:
+        article = Article.objects.get(pk=pk)
         article.delete()
         return redirect('articles:index')
-    return redirect('articles:detail',article.pk)
+
 
 # def edit(request, pk):
 #     article = Article.objects.get(pk=pk)
@@ -94,7 +105,9 @@ def delete(request, pk):
 #     }
 #     return render(request, 'articles/edit.html', context)
 
-@require_http_methods(['GET','POST'])
+
+@login_required
+@require_http_methods(['GET', 'POST'])
 def update(request, pk):
     article = Article.objects.get(pk=pk)
     if request.method == 'POST':
@@ -104,13 +117,11 @@ def update(request, pk):
             return redirect('articles:detail', article.pk)
     else:
         form = ArticleForm(instance=article)
-    context ={
-        'article' : article,
-        'form' : form,
+    context = {
+        'article': article,
+        'form': form,
     }
     return render(request, 'articles/update.html', context)
-
-
 
     # article = Article.objects.get(pk=pk)
     # form = ArticleForm(request.POST, instance=article)
@@ -121,11 +132,11 @@ def update(request, pk):
     #     'form': form
     # }
     # return render(request, 'articles/edit.html', context)
-    
+
     # article.title = request.POST.get('title')
     # #'내가 바꾸고 싶은 제목'
     # article.content = request.POST.get('content')
     # #"내가 바꾸고 싶은 내용"
     # article.save()
-    
+
     # return redirect('articles:detail', article.pk)
