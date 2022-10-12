@@ -109,3 +109,20 @@ def comments_delete(request, article_pk, comment_pk):
         if request.user == comment.user:
             comment.delete()
     return redirect('articles:detail', article_pk)
+
+require_POST
+def likes(request, article_pk):
+    if request.user.is_authenticated:
+        article = Article.objects.get(pk=article_pk)
+        # 조회를 먼저 한다.
+        # 좋아요 추가(add) 뿐만 아니라 취소(remove)도 해야함
+        # 좋아요 추가할지 취소할지 무슨 기준으로 if문을 작성할까?
+        # 현재 게시글에 좋아요를 누른 유저 목록에 현재 좋아요를 요청하는 유저가 있는지 없는지를 확인
+        # if request.user in article.like_users.all():
+        if article.like_users.filter(pk=request.user.pk).exists():
+        # 현재 게시글에 좋아요를 누른 유저중에 현재 좋아요를 요청하는 유저를 검색해서 존재하는지를 확인
+            article.like_users.remove(request.user) # 좋아요 취소
+        else:
+            article.like_users.add(request.user) # 좋아요 추가
+        return redirect('articles:index')
+    return redirect('accounts:login')
