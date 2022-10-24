@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <input type="text" id="text-input">
+  <p></p>
+  <script>
+    // input태그 선택 id앞에는 #을 붙어져무
+    const InputTag = document.querySelector('#text-input')
+    // 이벤트 핸들러 입력
+    InputTag.addEventListener('input', function (event) {
+      // console.log(event) 
+      // 이벤트 속성값에 접근할수 있음
+      // console.log(event.target)
+      // target의 value 값을 가지고 와야 된다
+      // console.log(event.target.value)
+      const pTag = document.querySelector('p')
+      //  채워야 될 값이 input에 있음 
+      pTag.innerText = event.target.value
+    })
+
+
+  </script>
+</body>
+
+</html>
