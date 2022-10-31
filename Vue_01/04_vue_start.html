@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+
+  <div id="app">
+    {{ message }}
+    <!-- 3.data를 안풀면 오류가 남(데이터가 없어서)  -->
+  </div>
+  <div>
+    {{ message }}
+    <!-- 문자로 그냥 나옴 -->
+  </div>
+  <!-- Vue CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.7.13/dist/vue.js"></script>
+  <script>
+    // CODE HERE
+    // 1. Vue instance constructor
+    // const vm = new Vue()
+    // console.log(vm)
+
+    // 2. el
+    const app = new Vue({
+      el: '#app',
+      // 선택자로 선택
+      //   // 3. data
+      data: {
+        message: 'Hello, Vue!'
+      },
+
+      //   // 4. methods
+      methods: {
+        print: function () {
+          // console.log(this.$data.message)
+          //  $는 구분하기 위해서 설정값을 하는 것 (생략도 가능)
+          console.log(this.message)
+          // 여기서 this는 new Vue 다 
+        },
+
+        bye: function () {
+          this.message = 'Bye, Vue!'
+        },
+
+        //   //   // 4-1. arrow function
+        arrowBye: () => {
+          this.message = 'Arrow Function?'
+          console.log(this)
+        }
+      }
+    })
+    console.log(app)
+  </script>
+</body>
+
+</html>

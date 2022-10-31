@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <div id="app">
+    <h2>1. Input -> Data</h2>
+    <h3>{{ myMessage }}</h3>
+    <input @input="onInputChange" type="text">
+    <!-- 이벤트를 발생시켜서 해야됨 -->
+    <hr>
+
+    <h2>2. Input <-> Data</h2>
+    <h3>{{ myMessage2 }}</h3>
+    <input v-model="myMessage2" type="text">
+    <!-- 이건 연결을 시켜서 양방향으로 가능 -->
+    <!-- 한글은 완성이 되야 뜬다 (IME(조합형문자  )이라 구글검색) -->
+    <hr>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+  <script>
+    const app = new Vue({
+      el: '#app',
+      data: {
+        myMessage: '',
+        myMessage2: '',
+      },
+      methods: {
+        onInputChange: function (event) {
+          this.myMessage = event.target.value
+        },
+      }
+    })
+  </script>
+</body>
+
+</html>
